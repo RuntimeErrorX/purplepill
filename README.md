@@ -1,4 +1,3 @@
-# purplepill
 # Moonshield uikit
 ## Install
 
