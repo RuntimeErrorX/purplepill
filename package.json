@@ -1,5 +1,5 @@
 {
-  "name": "VenetianXCapital-UIKit",
+  "name": "venetianxcapital-uikit",
   "version": "0.10.2",
   "description": "Set of UI components for pancake projects",
   "main": "dist/index.cjs.js",
