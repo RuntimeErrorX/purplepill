@@ -12,12 +12,7 @@ export default {
 export const Image: React.FC = () => {
   return (
     <div>
-      <Img
-        src="https://via.placeholder.com/800x400"
-        width={800}
-        height={400}
-        alt="test"
-      />
+      <Img src="https://via.placeholder.com/800x400" width={800} height={400} alt="test" />
       <div>Image</div>
     </div>
   );
@@ -26,12 +21,7 @@ export const Image: React.FC = () => {
 export const ImageResponsive: React.FC = () => {
   return (
     <div>
-      <Img
-        src="https://via.placeholder.com/800x400"
-        width={800}
-        height={400}
-        responsive
-      />
+      <Img src="https://via.placeholder.com/800x400" width={800} height={400} responsive />
       <div>Image</div>
     </div>
   );
@@ -40,12 +30,7 @@ export const ImageResponsive: React.FC = () => {
 export const Background: React.FC = () => {
   return (
     <div>
-      <BackgroundImage
-        src="https://via.placeholder.com/800x400"
-        width={800}
-        height={400}
-        mr="16px"
-      />
+      <BackgroundImage src="https://via.placeholder.com/800x400" width={800} height={400} mr="16px" />
       <div>Background Image</div>
     </div>
   );
@@ -54,13 +39,7 @@ export const Background: React.FC = () => {
 export const BackgroundResponsive: React.FC = () => {
   return (
     <div>
-      <BackgroundImage
-        src="https://via.placeholder.com/800x400"
-        width={800}
-        height={400}
-        responsive
-        mr="16px"
-      />
+      <BackgroundImage src="https://via.placeholder.com/800x400" width={800} height={400} responsive mr="16px" />
       <div>Background Image</div>
     </div>
   );

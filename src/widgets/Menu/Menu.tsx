@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import debounce from "lodash/debounce";
+import throttle from "lodash/throttle";
 import Overlay from "../../components/Overlay/Overlay";
+import { Flex } from "../../components/Flex";
 import { useMatchBreakpoints } from "../../hooks";
 import Logo from "./Logo";
 import Panel from "./Panel";
 import UserBlock from "./UserBlock";
 import { NavProps } from "./types";
-import {
-  MENU_HEIGHT,
-  SIDEBAR_WIDTH_REDUCED,
-  SIDEBAR_WIDTH_FULL,
-} from "./config";
+import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
+import Avatar from "./Avatar";
 
 const Wrapper = styled.div`
   position: relative;
@@ -47,8 +45,7 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   transition: margin-top 0.2s;
   transform: translate3d(0, 0, 0);
   ${({ theme }) => theme.mediaQueries.nav} {
-    margin-left: ${({ isPushed }) =>
-      `${isPushed ? SIDEBAR_WIDTH_FULL : SIDEBAR_WIDTH_REDUCED}px`};
+    margin-left: ${({ isPushed }) => `${isPushed ? SIDEBAR_WIDTH_FULL : SIDEBAR_WIDTH_REDUCED}px`};
   }
 `;
 
@@ -70,8 +67,10 @@ const Menu: React.FC<NavProps> = ({
   langs,
   setLang,
   currentLang,
-  moonPriceUsd,
+  cakePriceUsd,
   links,
+  priceLink,
+  profile,
   children,
 }) => {
   const { isXl } = useMatchBreakpoints();
@@ -83,23 +82,29 @@ const Menu: React.FC<NavProps> = ({
   useEffect(() => {
     const handleScroll = () => {
       const currentOffset = window.pageYOffset;
-      if (currentOffset < refPrevOffset.current) {
-        // Has scroll up
+      const isBottomOfPage = window.document.body.clientHeight === currentOffset + window.innerHeight;
+      const isTopOfPage = currentOffset === 0;
+      // Always show the menu when user reach the top
+      if (isTopOfPage) {
         setShowMenu(true);
-      } else {
-        // Has scroll down
-        setShowMenu(false);
+      }
+      // Avoid triggering anything at the bottom because of layout shift
+      else if (!isBottomOfPage) {
+        if (currentOffset < refPrevOffset.current) {
+          // Has scroll up
+          setShowMenu(true);
+        } else {
+          // Has scroll down
+          setShowMenu(false);
+        }
       }
       refPrevOffset.current = currentOffset;
     };
-    const debouncedHandleScroll = debounce(handleScroll, 300, {
-      leading: true,
-      trailing: true,
-    });
+    const throttledHandleScroll = throttle(handleScroll, 200);
 
-    window.addEventListener("scroll", debouncedHandleScroll);
+    window.addEventListener("scroll", throttledHandleScroll);
     return () => {
-      window.removeEventListener("scroll", debouncedHandleScroll);
+      window.removeEventListener("scroll", throttledHandleScroll);
     };
   }, []);
 
@@ -115,9 +120,14 @@ const Menu: React.FC<NavProps> = ({
           isDark={isDark}
           href={homeLink?.href ?? "/"}
         />
-        <UserBlock account={account} login={login} logout={logout} />
+        test
+        <Flex>
+          {children}
+          <UserBlock account={account} login={login} logout={logout} />
+          {profile && <Avatar profile={profile} />}
+        </Flex>
       </StyledNav>
-      <BodyWrapper>
+      <BodyWrapper visible={isMobile}>
         <Panel
           isPushed={isPushed}
           isMobile={isMobile}
@@ -127,18 +137,15 @@ const Menu: React.FC<NavProps> = ({
           langs={langs}
           setLang={setLang}
           currentLang={currentLang}
-          moonPriceUsd={moonPriceUsd}
+          cakePriceUsd={cakePriceUsd}
           pushNav={setIsPushed}
           links={links}
+          priceLink={priceLink}
         />
         <Inner isPushed={isPushed} showMenu={showMenu}>
           {children}
         </Inner>
-        <MobileOnlyOverlay
-          show={isPushed}
-          onClick={() => setIsPushed(false)}
-          role="presentation"
-        />
+        <MobileOnlyOverlay show={isPushed} onClick={() => setIsPushed(false)} role="presentation" />
       </BodyWrapper>
     </Wrapper>
   );

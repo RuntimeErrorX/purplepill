@@ -20,11 +20,7 @@ export type ColumnStateType<T> = {
   headerRender?: HeaderRenderType;
 };
 
-export type HeaderRenderType = ({
-  label,
-}: {
-  label: React.ReactNode;
-}) => React.ReactNode;
+export type HeaderRenderType = ({ label }: { label: React.ReactNode }) => React.ReactNode;
 
 // this is the type saved as state and returned
 export type HeaderType<T> = {
@@ -46,10 +42,7 @@ export type ColumnByNamesType<T> = {
   [key: string]: ColumnType<T>;
 };
 
-export type RenderFunctionType<T> = ({
-  value,
-  row,
-}: RenderFunctionArgsType<T>) => React.ReactNode | undefined;
+export type RenderFunctionType<T> = ({ value, row }: RenderFunctionArgsType<T>) => React.ReactNode | undefined;
 
 type RenderFunctionArgsType<T> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,10 +50,7 @@ type RenderFunctionArgsType<T> = {
   row: T;
 };
 
-export type ColumnByNameType<T> = Omit<
-  Required<ColumnType<T>>,
-  "name" | "sort"
->;
+export type ColumnByNameType<T> = Omit<Required<ColumnType<T>>, "name" | "sort">;
 
 export interface RowType<T extends DataType> {
   id: number;
@@ -101,6 +91,7 @@ export interface UseTableOptionsType<T> {
   sortable?: boolean;
   selectable?: boolean;
   pagination?: boolean;
+  sortColumn?: string;
   filter?: (row: RowType<T>[]) => RowType<T>[];
 }
 
@@ -134,7 +125,7 @@ export type TableState<T extends DataType> = {
   originalRows: RowType<T>[];
   selectedRows: RowType<T>[];
   filterOn: boolean;
-  sortColumn: string | null;
+  sortColumn: string | null | undefined;
   toggleAllState: boolean;
   pagination: PaginatorType;
   paginationEnabled: boolean;

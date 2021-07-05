@@ -20,10 +20,7 @@ export const variants = {
 export type Sizes = typeof sizes[keyof typeof sizes];
 export type Variants = typeof variants[keyof typeof variants];
 
-type ButtonTypes =
-  | ButtonHTMLAttributes<HTMLButtonElement>
-  | AnchorHTMLAttributes<HTMLAnchorElement>
-  | LinkProps;
+type ButtonTypes = ButtonHTMLAttributes<HTMLButtonElement> | AnchorHTMLAttributes<HTMLAnchorElement> | LinkProps;
 
 export type ButtonProps = {
   variant?: Variants;

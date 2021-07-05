@@ -5,6 +5,14 @@ export interface LangType {
   language: string;
 }
 
+export interface Profile {
+  username?: string;
+  image?: string;
+  profileLink: string;
+  noProfileLink: string;
+  showPip?: boolean;
+}
+
 export interface PushedProps {
   isPushed: boolean;
   pushNav: (isPushed: boolean) => void;
@@ -18,6 +26,7 @@ export interface NavTheme {
 export interface MenuSubEntry {
   label: string;
   href: string;
+  calloutClass?: string;
 }
 
 export interface MenuEntry {
@@ -25,21 +34,24 @@ export interface MenuEntry {
   icon: string;
   items?: MenuSubEntry[];
   href?: string;
+  calloutClass?: string;
   initialOpenState?: boolean;
 }
 
 export interface PanelProps {
   isDark: boolean;
   toggleTheme: (isDark: boolean) => void;
-  moonPriceUsd?: number;
+  cakePriceUsd?: number;
   currentLang: string;
   langs: LangType[];
   setLang: (lang: LangType) => void;
   links: Array<MenuEntry>;
+  priceLink: string;
 }
 
 export interface NavProps extends PanelProps {
   account?: string;
   login: Login;
+  profile?: Profile;
   logout: () => void;
 }
