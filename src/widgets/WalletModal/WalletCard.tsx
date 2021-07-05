@@ -11,12 +11,7 @@ interface Props {
   mb: string;
 }
 
-const WalletCard: React.FC<Props> = ({
-  login,
-  walletConfig,
-  onDismiss,
-  mb,
-}) => {
+const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss, mb }) => {
   const { title, icon: Icon } = walletConfig;
   return (
     <Button

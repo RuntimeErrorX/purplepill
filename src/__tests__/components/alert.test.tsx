@@ -3,17 +3,15 @@ import { renderWithTheme } from "../../testHelpers";
 import { Alert } from "../../components/Alert";
 
 it("renders correctly", () => {
-  const { asFragment } = renderWithTheme(
-    <Alert title="Alert title" description="Alert description" />
-  );
+  const { asFragment } = renderWithTheme(<Alert title="Alert title">Description</Alert>);
 
   expect(asFragment()).toMatchInlineSnapshot(`
     <DocumentFragment>
       <div
-        class="sc-eCssSg sc-fubCfw cntkGK bbUrQL"
+        class="sc-eCssSg sc-fubCfw cntkGK jErUdc"
       >
         <div
-          class="sc-jSgupP jOSdzM"
+          class="sc-jSgupP jjCMEU"
         >
           <svg
             class="sc-bdfBwQ gcQKnf"
@@ -28,7 +26,7 @@ it("renders correctly", () => {
           </svg>
         </div>
         <div
-          class="sc-gKsewC eRYALI"
+          class="sc-gKsewC bkaskd"
         >
           <div
             class="sc-gsTCUz cFAeYW"
@@ -40,7 +38,7 @@ it("renders correctly", () => {
             class="sc-gsTCUz doXHqk"
             color="text"
           >
-            Alert description
+            Description
           </p>
         </div>
       </div>

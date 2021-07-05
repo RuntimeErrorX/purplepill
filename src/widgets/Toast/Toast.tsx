@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import { Alert, alertVariants } from "../../components/Alert";
+import { Text } from "../../components/Text";
+import ToastAction from "./ToastAction";
 import { ToastProps, types } from "./types";
 
 const alertTypeMap = {
@@ -23,22 +25,13 @@ const StyledToast = styled.div`
   }
 `;
 
-const Toast: React.FC<ToastProps> = ({
-  toast,
-  onRemove,
-  style,
-  ttl,
-  ...props
-}) => {
+const Toast: React.FC<ToastProps> = ({ toast, onRemove, style, ttl, ...props }) => {
   const timer = useRef<number>();
   const ref = useRef(null);
   const removeHandler = useRef(onRemove);
-  const { id, title, description, type } = toast;
+  const { id, title, description, type, action } = toast;
 
-  const handleRemove = useCallback(() => removeHandler.current(id), [
-    id,
-    removeHandler,
-  ]);
+  const handleRemove = useCallback(() => removeHandler.current(id), [id, removeHandler]);
 
   const handleMouseEnter = () => {
     clearTimeout(timer.current);
@@ -70,17 +63,19 @@ const Toast: React.FC<ToastProps> = ({
 
   return (
     <CSSTransition nodeRef={ref} timeout={250} style={style} {...props}>
-      <StyledToast
-        ref={ref}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <Alert
-          title={title}
-          description={description}
-          variant={alertTypeMap[type]}
-          onClick={handleRemove}
-        />
+      <StyledToast ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Alert title={title} variant={alertTypeMap[type]} onClick={handleRemove}>
+          {action ? (
+            <>
+              <Text as="p" mb="8px">
+                {description}
+              </Text>
+              <ToastAction action={action} />
+            </>
+          ) : (
+            description
+          )}
+        </Alert>
       </StyledToast>
     </CSSTransition>
   );

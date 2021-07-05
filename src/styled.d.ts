@@ -1,7 +1,7 @@
 import "styled-components";
-import { MoonTheme } from "./theme";
+import { PancakeTheme } from "./theme";
 
 declare module "styled-components" {
   /* eslint-disable @typescript-eslint/no-empty-interface */
-  export interface DefaultTheme extends MoonTheme {}
+  export interface DefaultTheme extends PancakeTheme {}
 }

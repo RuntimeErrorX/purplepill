@@ -11,12 +11,7 @@ const defaultParticleOptions = {
   distance: 500,
 };
 
-const createParticle = (
-  x: number,
-  y: number,
-  imgSrc: string,
-  options: ParticleOptions = {}
-) => {
+const createParticle = (x: number, y: number, imgSrc: string, options: ParticleOptions = {}) => {
   const { size, distance } = { ...defaultParticleOptions, ...options };
 
   const particle = document.createElement("particle");
@@ -83,17 +78,8 @@ const defaultOptions = {
 /**
  * @see https://css-tricks.com/playing-with-particles-using-the-web-animations-api/
  */
-const useParticleBurst = (
-  options: Options
-): { initialize: () => void; teardown: () => void } => {
-  const {
-    selector,
-    numberOfParticles,
-    debounceDuration,
-    imgSrc,
-    disableWhen,
-    particleOptions,
-  } = {
+const useParticleBurst = (options: Options): { initialize: () => void; teardown: () => void } => {
+  const { selector, numberOfParticles, debounceDuration, imgSrc, disableWhen, particleOptions } = {
     ...defaultOptions,
     ...options,
   };
@@ -117,12 +103,7 @@ const useParticleBurst = (
               }
             } else {
               for (let i = 0; i < numberOfParticles; i += 1) {
-                createParticle(
-                  event.clientX,
-                  event.clientY + window.scrollY,
-                  imgSrc,
-                  particleOptions
-                );
+                createParticle(event.clientX, event.clientY + window.scrollY, imgSrc, particleOptions);
               }
             }
           }
